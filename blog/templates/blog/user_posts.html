@@ -1,0 +1,50 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<p class="lead">Total no. of posts by {{ view.kwargs.username }} are "{{ page_obj.paginator.count }}"</p>
+<p></p>
+    {% for post in posts %}
+    <div class="card profile-card-2">
+      <div class="card-img-block">
+          {% if post.image %}
+          <img class="img-fluid" src="{{ post.image.url }}" alt="Card image cap">
+          {% endif %}
+      </div>
+      <div class="card-body pt-5">
+          <a class="card-title" href="{% url 'user-profile' post.author.username %}">{{ post.author }}</a>
+          <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+
+          {% if post.author == user %}
+          <h3><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+          {% else %}
+          <h3>{{ post.title }}</h3>
+          {% endif %}
+          <p class="card-text">{{ post.content|linebreaks }}</p>
+      </div>
+    </div>
+    <p></p>
+    {% endfor %}
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        {% if is_paginated %}
+          
+          {% if page_obj.has_previous %}
+            <a class="btn btn-outline-primary" href="?page={{ page_obj.previous_page_number }}">«</a>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <a class="btn btn-primary" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a class="btn btn-outline-primary" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <a class="btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}">»</a>
+          {% endif %}
+
+        {% endif %}
+      </li>
+    </ul>
+{% endblock content %}

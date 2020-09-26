@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+  <div class="card text-center" style="padding:40px">
+    <div class="card profile-card-5" style="padding:60px">
+        <div class="card-img-block">
+            <img class="card-img-top" src="{{ user.profile.image.url }}" alt="Card image cap">
+        </div>
+            <div class="card-body pt-0">
+            <h5 class="card-title">{{ user.username }}</h5>
+            <p class="card-text">{{ user.first_name }}{{ user.last_name }}Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="https://en.wikipedia.org/wiki/Software_engineer" class="btn btn-primary">Software Engineer</a>
+            </div>
+    </div>
+  </div>
+</div>
+  <p></p>
+{% endblock content %}

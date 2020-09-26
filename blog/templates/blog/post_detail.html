@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="card profile-card-2">
+    <div class="card-img-block">
+        {% if post.image %}
+        <img class="img-fluid" src="{{ post.image.url }}" alt="Card image cap">
+        {% endif %}
+    </div>
+    <div class="card-body pt-5">
+        <a class="card-title" href="{% url 'user-profile' post.author.username %}">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        <h3>{{ post.title }}</h3>
+        <p class="card-text">{{ post.content|linebreaks}}</p>
+    </div>
+    {% if object.author == user %} 
+                    <div>
+                        <br>
+                        <a class="btn-detail ml-5" href="{% url 'post-update' object.id %}">Update</a>
+                        <a class="btn-detail2 " href="{% url 'post-delete' object.id %}">Delete</a>
+                    </div><br>
+    {% endif %}
+</div>
+       
+{% endblock %}
